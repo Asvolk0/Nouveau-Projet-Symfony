@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes users</title>
+</head>
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    h2{
+        margin: 10px 0;
+    }
+    div{
+        margin: 20px 0;
+    }
+
+</style>
+<body>
+    <h1>
+        Mes users présents
+    </h1>
+    {% if (usersActif) %}
+        {% for userActif in usersActif %}
+            <div style="border: 1px solid #000; width: 20%; display:flex; justify-content:center;flex-direction:column;align-items:center;">
+                <h2>
+                    {{userActif.name}}
+                </h2>
+                <h2>
+                    {{userActif.surname}}
+                </h2>
+                <span>
+                    Ton email est : {{userActif.email}}
+                </span>
+                <br>
+                <span>
+                {% if (userActif.admin == true) %}
+                    Cette personne est admin
+                {% else %}
+                    Cette personne n'est pas admin  
+                {% endif %}
+                </span>
+                <br>
+                <a href="{{ path('modifierActif', {'id':userActif.id}) }}">Inactive</a>
+                {% if userActif.admin == true %}
+                    <a href="{{ path('mettreAdmin', {'id':userActif.id}) }}">Enlever l'admin</a>
+                {% else %}
+                    <a href="{{ path('mettreAdmin', {'id':userActif.id}) }}">Mettre admin</a>      
+                {% endif %}
+                <a href="{{ path('modifierUser', {'id':userActif.id}) }}">Modifier</a>
+                <a href="{{ path('supprimerUsers', {'id':userActif.id}) }}">Supprimer</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        Il n'y a aucun user ici
+    {% endif %}
+
+    <h1>
+        Mes users non présents
+    </h1>
+    {% if (usersInactif) %}
+        {% for userInactif in usersInactif %}
+            <div style="border: 1px solid #000; width: 20%; display:flex; justify-content:center;flex-direction:column;align-items:center;">
+                <h2>
+                    {{userInactif.name}}
+                </h2>
+                <h2>
+                    {{userInactif.surname}}
+                </h2>
+                <span>
+                    Ton email est : {{userInactif.email}}
+                </span>
+                <br>
+                <span>
+                {% if (userInactif.admin == true) %}
+                    Cette personne est admin
+                {% else %}
+                    Cette personne n'est pas admin   
+                {% endif %}
+                </span>
+                <a href="{{ path('modifierActif', {'id':userInactif.id}) }}">Active</a>
+                {% if userInactif.admin == true %}
+                    <a href="{{ path('mettreAdmin', {'id':userInactif.id}) }}">Enlever l'admin</a>
+                {% else %}
+                    <a href="{{ path('mettreAdmin', {'id':userInactif.id}) }}">Mettre admin</a>      
+                {% endif %}
+                <a href="{{ path('modifierUser', {'id':userInactif.id}) }}">Modifier</a>
+                <a href="{{ path('supprimerUsers', {'id':userInactif.id}) }}">Supprimer</a>
+            </div>
+        {% endfor %}
+
+    {% else %}
+        Il n'y a aucun user ici
+    {% endif %}
+    
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes produits</title>
+</head>
+<body>
+    <h1>
+        Mes produits mis en vente
+    </h1>
+    {% if (produitsActif) %}
+        {% for produitActif in produitsActif %}
+            <h2>
+                {{produitActif.name}}
+            </h2>
+            <p>
+                {{produitActif.description}}
+            </p>
+            <span>
+                Le prix du produit est de {{produitActif.price}} €
+            </span>
+            <br>
+            <span>
+            {% if (produitActif.stock != 0) %}
+                Il reste {{produitActif.stock}} 
+                {% if (produitActif.stock < 2) %}
+                    produit
+                {% else %}
+                    produits    
+                {% endif %}
+            {% else %}
+                Produits en rupture de stock        
+            {% endif %}
+            </span>
+            <br>
+            <a href="{{ path('changeActive', {'id':produitActif.id}) }}">Inactive</a>
+            <a href="{{ path('acheterUnProduit', {'id':produitActif.id}) }}">Acheter</a>
+        {% endfor %}
+    {% else %}
+        Il n'y a aucun produit ici
+    {% endif %}
+
+    <h1>
+        Mes produits en non vente
+    </h1>
+    {% if (produitsInactif) %}
+        {% for produitInactif in produitsInactif %}
+            <h2>
+                {{produitInactif.name}}
+            </h2>
+            <p>
+                {{produitInactif.description}}
+            </p>
+            <span>
+                Le prix du produit est de {{produitInactif.price}} €
+            </span>
+            <br>
+            <span>
+            {% if (produitInactif.stock != 0) %}
+                Il reste {{produitInactif.stock}} 
+                {% if (produitInactif.stock < 2) %}
+                    produit
+                {% else %}
+                    produits    
+                {% endif %}
+            {% else %}
+                Produits en rupture de stock        
+            {% endif %}
+            </span>
+            <br>
+            <a href="{{ path('modifierProduit', {'id':produitInactif.id}) }}">Modifier</a>
+            <a href="{{ path('supprimerProduit', {'id':produitInactif.id}) }}">Supprimer</a>
+            <a href="{{ path('changeActive', {'id':produitInactif.id}) }}">Active</a>
+        {% endfor %}
+
+    {% else %}
+        Il n'y a aucun produit ici
+    {% endif %}
+    
+</body>
+</html>
